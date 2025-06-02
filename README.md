@@ -136,4 +136,4 @@ L'application sera accessible sur :
 ```
 ```
 ## 8.Demo sur PythonAnyWhere
-Une démonstration de l'application est disponible en ligne :
+[Une démonstration de l'application est disponible en ligne : ](https://zinebboulahbach.pythonanywhere.com/)
