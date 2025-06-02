@@ -114,3 +114,12 @@ def deleteUser(request, pk):
     userForDeletion = User.objects.get(id=pk)
     userForDeletion.delete()
     return Response('User was deleted')
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteMyAccount(request):
+    """Permet à un utilisateur authentifié de supprimer son propre compte."""
+    user = request.user
+    user.delete()
+    return Response({'detail': 'Votre compte a été supprimé avec succès.'}, status=status.HTTP_204_NO_CONTENT)

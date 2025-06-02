@@ -4,23 +4,31 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from rest_framework import status
+from django_filters.rest_framework import DjangoFilterBackend
 
 from base.models import Product, Review
 from base.serializers import ProductSerializer
-
-from rest_framework import status
+from base.filters import ProductFilter
 
 
 @api_view(['GET'])
 def getProducts(request):
+    # Restaurer la gestion du paramètre 'keyword' pour la recherche simple
     query = request.query_params.get('keyword')
     if query == None:
         query = ''
 
+    # Restaurer le filtrage par nom (était basé sur keyword avant)
     products = Product.objects.filter(
-        name__icontains=query).order_by('-createdAt')
+        name__icontains=query).order_by('-createdAt') # Restaurer le tri par défaut
 
-    page = request.query_params.get('page')
+    # Le filtrage avancé avec ProductFilter reste en place si vous l'avez ajouté précédemment et souhaitez le garder.
+    # Si vous souhaitez également annuler le filtrage avancé, il faudra plus de modifications.
+    # Pour l'instant, je vais juste annuler la partie tri manuel et la logique de keyword.
+    
+    # Pagination (reste inchangé)
+    page = request.query_params.get('page', 1)
     paginator = Paginator(products, 5)
 
     try:
@@ -30,13 +38,30 @@ def getProducts(request):
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
 
-    if page == None:
-        page = 1
-
     page = int(page)
-    print('Page:', page)
+    
+    # Préparer la réponse (reste inchangé)
     serializer = ProductSerializer(products, many=True)
-    return Response({'products': serializer.data, 'page': page, 'pages': paginator.num_pages})
+    # Note: Les informations de filtres (categories, brands, price_range) dans la réponse
+    # dépendent de si vous annulez aussi la partie filtrage avancé.
+    # Si vous voulez tout annuler jusqu'à l'état initial, précisez-le.
+    response = {
+        'products': serializer.data,
+        'page': page,
+        'pages': paginator.num_pages,
+        # Restaurer la réponse originale ou garder les infos de filtres si le filtrage avancé est conservé
+        # Si vous gardez le filtrage avancé, cette partie de la réponse est correcte.
+        'filters': {
+            'categories': Product.objects.values_list('category', flat=True).distinct(),
+            'brands': Product.objects.values_list('brand', flat=True).distinct(),
+            'price_range': {
+                'min': Product.objects.order_by('price').first().price if products else 0,
+                'max': Product.objects.order_by('-price').first().price if products else 0,
+            }
+        }
+    }
+    
+    return Response(response)
 
 
 @api_view(['GET'])

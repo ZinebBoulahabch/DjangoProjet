@@ -1,55 +1,209 @@
-main{
-    min-height: 80vh;
+:root {
+  --primary-color: #E91E63; /* Rose vif */
+  --secondary-color: #FF80AA; /* Rose plus clair pour les accents */
+  --accent-color: #4A148C; /* Un violet foncé complémentaire */
+  --background-color: #FCE4EC; /* Fond très légèrement rosé */
+  --text-color: #4A4A4A; /* Texte gris foncé pour la lisibilité */
+  --border-radius: 8px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
 }
 
-h1{
-  font-size: 1.8rem;
-  padding:1rem 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-h2{
-  font-size: 1.4rem;
-  padding:0.5rem 0;
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
 }
 
-h3{
-    padding:1rem 0;
+main {
+  min-height: 80vh;
+  padding: 2rem 0;
 }
 
-.rating span{
-  margin:0.1rem;
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  padding: 1.5rem 0;
+  color: var(--primary-color);
 }
 
-/* carousel */
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 1rem 0;
+  color: var(--primary-color);
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 1rem 0;
+  color: var(--primary-color);
+}
+
+.rating span {
+  margin: 0.1rem;
+  color: #ffc107;
+}
+
+/* Modern Button Styles */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: inline-block; /* Assure que les paddings fonctionnent correctement */
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent; /* Ajouter une bordure transparente par défaut */
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(var(--primary-color), 0.25); /* Anneau de focus basé sur la couleur primaire */
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color); /* Assurer que la bordure correspond */
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color); /* Changer la couleur de la bordure au survol */
+  box-shadow: var(--box-shadow);
+}
+
+.btn-outline-primary {
+    background-color: transparent;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: var(--box-shadow);
+}
+
+/* Card Styles */
+.card {
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+  border: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Carousel Styles */
 .carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .carousel-caption {
   position: absolute;
   top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border-radius: var(--border-radius);
 }
 
 .carousel-caption h4 {
   color: #fff;
+  font-weight: 600;
 }
 
 .carousel img {
-  display:block;
+  display: block;
   height: 300px;
   padding: 30px;
   margin: 40px;
-  border-radius: 50%;
+  border-radius: var(--border-radius);
   margin-left: auto;
   margin-right: auto;
+  object-fit: cover;
+  transition: var(--transition);
 }
-.carousel a {
-  margin: 0 auto;
+
+.carousel img:hover {
+  transform: scale(1.05);
 }
+
+/* Form Styles */
+.form-control {
+  border-radius: var(--border-radius);
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+/* Responsive Design */
 @media (max-width: 900px) {
   .carousel-caption h2 {
     font-size: 2.5vw;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
