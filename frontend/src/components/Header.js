@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navbar, Nav, Container, Row, NavDropdown, Badge } from 'react-bootstrap'
+import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import SearchBox from './SearchBox'
 import { logout } from '../actions/userActions'
