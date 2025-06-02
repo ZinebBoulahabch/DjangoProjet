@@ -23,8 +23,6 @@ def addOrderItems(request):
         return Response({'detail': 'No Order Items'}, status=status.HTTP_400_BAD_REQUEST)
     else:
 
-        # (1) Create order
-
         order = Order.objects.create(
             user=user,
             paymentMethod=data['paymentMethod'],
@@ -33,7 +31,6 @@ def addOrderItems(request):
             totalPrice=data['totalPrice']
         )
 
-        # (2) Create shipping address
 
         shipping = ShippingAddress.objects.create(
             order=order,
@@ -43,7 +40,6 @@ def addOrderItems(request):
             country=data['shippingAddress']['country'],
         )
 
-        # (3) Create order items adn set order to orderItem relationship
         for i in orderItems:
             product = Product.objects.get(_id=i['product'])
 
